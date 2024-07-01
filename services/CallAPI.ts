@@ -44,7 +44,8 @@ class BaseCallAPI {
   }
 
   authLogin(data: { email: string; password: string }) {
-    return this.common.post<SignInResponse>(`/auth/admin/sign-in`, data);
+    // return this.common.post<SignInResponse>(`/auth/admin/sign-in`, data);
+    return this.common.post<SignInResponse>(`/api/v1/login`, data);
   }
 
   authLogout() {
@@ -53,6 +54,10 @@ class BaseCallAPI {
 
   authRegister(data: { email: string; password: string }) {
     return this.common.post(`/auth/admin/sign-up`, data);
+  }
+
+  getUserProfile() {
+    return this.admin.get(`/my-profile`);
   }
 }
 

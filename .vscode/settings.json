@@ -1,0 +1,30 @@
+{
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#2489DF",
+    "activityBar.background": "#2489DF",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#ed8ef1",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#2489DF",
+    "statusBar.background": "#2489DF",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#2489DF",
+    "statusBarItem.remoteBackground": "#2489DF",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#2489DF",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#2489DF99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#2489DF",
+  "conventionalCommits.autoCommit": false,
+  "cSpell.words": [
+    "Popconfirm"
+  ]
+}

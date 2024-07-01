@@ -1,19 +1,16 @@
 "use client";
 
-import { Button } from "antd";
+import { Breadcrumb, Button, Typography } from "antd";
+import { useAuth } from "../../store/auth";
+import ContentBlanket from "./components/ContentBlanket";
 
 export default function Page() {
+  const auth = useAuth() as any;
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button
-        type="primary"
-        onClick={() => {
-          console.log("Hello, world!");
-          alert("Hello, world!");
-        }}
-      >
-        Hello, Gio!
-      </Button>
-    </main>
+    <ContentBlanket title="Dasbor Admin">
+      <Typography.Text className="font-semibold text-lg">
+        Selamat datang, {auth?.user?.name ?? "john"}!
+      </Typography.Text>
+    </ContentBlanket>
   );
 }

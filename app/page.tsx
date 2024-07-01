@@ -1,15 +1,23 @@
 "use client";
 
-import Cookies from "js-cookie";
 import { useEffect } from "react";
+import Cookies from "js-cookie";
 import { TOKEN_KEY } from "../constants/vars";
 import Loader from "../components/Loader";
 import Wrapper from "./wrapper";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../store/auth";
 
 export default function Page() {
-  const token = Cookies.get(TOKEN_KEY);
+  const token = localStorage.getItem(TOKEN_KEY);
   const router = useRouter();
+  // const auth = useAuth() as any;
+
+  // useEffect(() => {
+  //   if (token) {
+  //     auth.setToken(token);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (token) {
@@ -17,7 +25,7 @@ export default function Page() {
     } else {
       router.push("/auth/login");
     }
-  }, [token]);
+  }, []);
 
   return (
     <Wrapper>

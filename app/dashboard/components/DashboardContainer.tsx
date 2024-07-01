@@ -14,7 +14,16 @@ import {
   ShoppingCartOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Button, theme, Tooltip, Input } from "antd";
+import {
+  Layout,
+  Menu,
+  Button,
+  theme,
+  Tooltip,
+  Input,
+  BreadcrumbProps,
+  Breadcrumb,
+} from "antd";
 import { ItemType, MenuItemType } from "antd/es/menu/hooks/useItems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,6 +32,7 @@ import BottomNav from "./BottomNav";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { TOKEN_KEY } from "../../../constants/vars";
+import { useAuth } from "../../../store/auth";
 
 const { Header, Sider, Content } = Layout;
 
@@ -130,20 +140,45 @@ export const SIDE_MENU = _.filter(
   }
 );
 
-const DashboardContainer = ({ children }: React.PropsWithChildren) => {
+function getCookie(name: string) {
+  const value = "; " + document.cookie;
+  const parts = value.split("; " + name + "=");
+  if (parts && parts.length === 2) {
+    const lastPart = parts.pop();
+    if (lastPart) {
+      return lastPart.split(";").shift();
+    }
+  }
+  return null;
+}
+
+const DashboardContainer = ({
+  children,
+  header,
+}: {
+  children: React.ReactNode;
+  header?: {
+    title?: string;
+    breadcrumb?: BreadcrumbProps;
+  };
+}) => {
   const router = useRouter();
   const [activeKey, setActiveKey] = useState<string>("");
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
   const utok = theme.useToken();
   const { colorBgContainer, borderRadiusLG } = utok.token;
   const pathname = usePathname();
   const { md } = useBreakpoint();
-  const token = Cookies.get(TOKEN_KEY);
+  const token = localStorage.getItem(TOKEN_KEY);
+  const auth = useAuth() as any;
+
+  useEffect(() => {
+    console.log("auth", auth);
+  }, []);
 
   useEffect(() => {
     if (!token) return router.push("/auth/login");
-    console.log("amigdfala token", token);
     setMounted(true);
   }, [token]);
 
@@ -175,17 +210,28 @@ const DashboardContainer = ({ children }: React.PropsWithChildren) => {
           width={250}
           className="overflow-y-auto"
         >
-          {collapsed ? (
-            <img
-              src="/icon.svg"
-              alt="ubox-u-white"
-              className="mx-auto mb-16 mt-8"
+          <div className="flex flex-col gap-3">
+            <Button
+              type="text"
+              icon={
+                !collapsed ? <LeftCircleOutlined /> : <RightCircleOutlined />
+              }
+              onClick={() => setCollapsed(!collapsed)}
+              className="bg-white rounded-xl h-12 mr-auto"
+              size="large"
             />
-          ) : (
-            <div className="mx-auto mb-8 mt-8 flex flex-col justify-center text-center align-middle">
-              <img src="/icon.png" alt="ubox-white" className="mx-auto" />
-            </div>
-          )}
+            {collapsed ? (
+              <img
+                src="/icon.png"
+                alt="testibox-logo"
+                className="mx-auto mb-16 mt-8"
+              />
+            ) : (
+              <div className="mx-auto mb-8 mt-8 flex flex-col justify-center text-center align-middle">
+                <img src="/icon.png" alt="ubox-white" className="mx-auto" />
+              </div>
+            )}
+          </div>
           <Menu
             mode="inline"
             selectedKeys={[activeKey]}
@@ -194,36 +240,7 @@ const DashboardContainer = ({ children }: React.PropsWithChildren) => {
         </Sider>
       )}
       <Layout>
-        <Header className="flex items-center">
-          {md && (
-            <Button
-              type="text"
-              icon={
-                !collapsed ? <LeftCircleOutlined /> : <RightCircleOutlined />
-              }
-              onClick={() => setCollapsed(!collapsed)}
-              className="-ml-12 rounded-xl h-12"
-              size="large"
-            />
-          )}
-
-          <Input
-            placeholder="Search..."
-            prefix={<SearchOutlined />}
-            className="md:w-1/4 mx-2 rounded-xl h-12"
-          />
-        </Header>
-        <Content
-          style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          {children}
-        </Content>
+        <Content style={{ padding: "0 30px" }}>{children}</Content>
         {/* Bottom Nav */}
         {!md && <BottomNav activeKey={activeKey} />}
       </Layout>

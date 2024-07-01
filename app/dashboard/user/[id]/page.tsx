@@ -2,6 +2,7 @@
 
 import {
   Button,
+  Card,
   Form,
   Input,
   InputNumber,
@@ -18,8 +19,8 @@ import {
   ExportOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { useAuth } from "../../../store/auth";
-import ContentBlanket from "../components/ContentBlanket";
+import { useAuth } from "../../../../store/auth";
+import ContentBlanket from "../../components/ContentBlanket";
 import Search from "antd/es/input/Search";
 import { useEffect, useState } from "react";
 import _ from "lodash";
@@ -195,9 +196,6 @@ export default function Page() {
       sorter: (a, b) => a.name.length - b.name.length,
       sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
       ellipsis: true,
-      render: (text, record, i) => (
-        <Link href={`/dashboard/user/${record.key}`}>{text}</Link>
-      ),
     },
     {
       title: "Business",
@@ -311,7 +309,6 @@ export default function Page() {
 
   return (
     <ContentBlanket
-      title="Member"
       breadcrumb={{
         style: { margin: "16px 0" },
         items: [
@@ -319,21 +316,16 @@ export default function Page() {
             title: "Dasbor",
           },
           {
-            title: <a href="">Member</a>,
+            title: <Link href="/dashboard/user">Member</Link>,
+          },
+          {
+            title: "John Brown",
           },
         ],
       }}
       header={
         <>
-          <div className="flex gap-2 p-4 justify-between">
-            <Search
-              placeholder="Search"
-              className="w-1/3"
-              onSearch={(c) => {
-                console.log(c, "chuckin");
-              }}
-              enterButton
-            />
+          <div className="flex gap-2 p-4 justify-between bg-transparent">
             <div className="flex gap-2">
               <Button
                 type="primary"
@@ -391,85 +383,57 @@ export default function Page() {
         </>
       }
     >
-      {selectedRowKeys.length > 0 && (
-        <Space className="mbb-2">
-          <span>{selectedRowKeys.length} items selected</span>
-          <Button onClick={clearFilters} type="link">
-            Clear filters
-          </Button>
-          <Button onClick={clearAll} type="link">
-            Clear filters and sorters
-          </Button>
-          <Button onClick={setAgeSort} type="link">
-            Set age sort
-          </Button>
-        </Space>
-      )}
-      <Table
-        columns={columns}
-        dataSource={customData}
-        onChange={handleChange}
-        rowSelection={{ ...rowSelection, checkStrictly }}
-        scroll={{ x: "max-content" }}
-      />
-
-      <Modal
-        title="Basic Modal"
-        visible={openAddModal}
-        onOk={() => {
-          form.submit(); // form.submit pada antd form berfungsi untuk memanggil onFinish
-        }}
-      >
-        <Form
-          form={form}
-          {...layout}
-          name="nest-messages"
-          onFinish={onFinish}
-          style={{ maxWidth: 600 }}
-          validateMessages={validateMessages}
-        >
-          <Form.Item
-            name={["user", "name"]}
-            label="Name"
-            rules={[{ required: true }]}
+      <div className="flex gap-2">
+        <div className="w-1/3 flex flex-col gap-1">
+          <Card
+            size="small"
+            title="Small size card"
+            extra={<a href="#">More</a>}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name={["user", "email"]}
-            label="Email Address"
-            rules={[{ type: "email", required: true }]}
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+          <Card
+            size="small"
+            title="Small size card"
+            extra={<a href="#">More</a>}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name={["user", "phone"]}
-            label="Personal Number"
-            rules={[{ type: "number" }]}
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+        </div>
+        <div className="w-2/3 flex-col gap-1">
+          <Card
+            size="small"
+            title="Small size card"
+            extra={<a href="#">More</a>}
           >
-            <InputNumber prefix="+62" style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item name={["user", "businessName"]} label="Business Name">
-            <Input />
-          </Form.Item>
-          <Form.Item name={["user", "plan"]} label="Member Plan">
-            <Select
-              placeholder="Select a option and change input text above"
-              allowClear
-            >
-              <Select.Option value={BusinessPlan.FREE}>
-                {BusinessPlanLabel[BusinessPlan.FREE]}
-              </Select.Option>
-              <Select.Option value={BusinessPlan.BASIC}>
-                {BusinessPlanLabel[BusinessPlan.BASIC]}
-              </Select.Option>
-              <Select.Option value={BusinessPlan.PREMIUM}>
-                {BusinessPlanLabel[BusinessPlan.PREMIUM]}
-              </Select.Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+          <Card
+            size="small"
+            title="Small size card"
+            extra={<a href="#">More</a>}
+          >
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+          <Card
+            size="small"
+            title="Small size card"
+            extra={<a href="#">More</a>}
+          >
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+        </div>
+      </div>
     </ContentBlanket>
   );
 }

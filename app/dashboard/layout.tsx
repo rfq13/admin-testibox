@@ -4,8 +4,8 @@ import Wrapper from "../wrapper";
 import DashboardContainer from "./components/DashboardContainer";
 
 export const metadata = {
-  title: "Abstren Dashboard Layout",
-  description: "Nonok Sugarwandot",
+  title: "Dashboard Page | Testibox",
+  description: "Testibox - tesimoni dari hati",
 };
 
 const RootLayout = ({ children }: React.PropsWithChildren) => {
